@@ -82,35 +82,91 @@
     <button id="playChord" class="big">▶ Strum it</button>
   </section>
 
-  <!-- PRACTICE -->
-  <section id="tab-practice" class="screen">
-    <div class="stats">
-      <div class="card stat"><b id="streakVal">0</b><small>day streak 🔥</small></div>
-      <div class="card stat"><b id="todayVal">0</b><small>min today</small></div>
-      <div class="card stat"><b id="weekVal">0</b><small>min this week</small></div>
+  <!-- PRACTICE STUDIO 2.0 -->
+  <section id="tab-practice" class="screen practice-screen">
+    <div class="practice-heading">
+      <div>
+        <div class="eyebrow">YOUR TRAINING SPACE</div>
+        <h1>Practice <span>Studio</span></h1>
+        <p class="practice-intro">Make every minute count. Build a routine, focus on a skill, and see your consistency grow.</p>
+      </div>
+      <div class="streak-pill"><span>🔥</span><b id="streakVal">0</b><small>day streak</small></div>
     </div>
-    <div class="card">
-      <div class="row between"><span id="goalTxt">0 / 15 min today</span>
-        <label class="goal">Goal <input id="goalInput" type="number" min="1" max="600" inputmode="numeric"> min</label></div>
+
+    <div class="practice-stats">
+      <article class="practice-stat card">
+        <span class="stat-icon">◷</span><strong id="todayVal">0</strong><small>MINUTES TODAY</small>
+      </article>
+      <article class="practice-stat card">
+        <span class="stat-icon">▤</span><strong id="weekVal">0</strong><small>MINUTES THIS WEEK</small>
+      </article>
+      <article class="practice-stat card">
+        <span class="stat-icon">✦</span><strong id="sessionCount">0</strong><small>SESSIONS COMPLETED</small>
+      </article>
+    </div>
+
+    <article class="card goal-card">
+      <div class="goal-topline">
+        <div><div class="eyebrow">DAILY TARGET</div><h2 id="goalTxt">0 / 20 min</h2></div>
+        <label class="goal-control">GOAL <input id="goalInput" type="number" min="5" max="600" step="5" inputmode="numeric"> <span>MIN</span></label>
+      </div>
       <div class="track"><div id="goalBar"></div></div>
-      <div id="weekBars" class="week"></div>
-    </div>
-    <div class="card">
-      <div class="timer" id="timerTxt">00:00</div>
-      <div class="row">
-        <select id="catSel" aria-label="What are you practising?">
-          <option>Chords</option><option>Scales</option><option>Songs</option>
-          <option>Technique</option><option>Ear training</option><option>Other</option>
+      <div class="goal-foot"><span id="goalRemaining">20 minutes to reach your goal</span><span id="goalPercent">0%</span></div>
+    </article>
+
+    <article class="card week-card">
+      <div class="section-head"><div><div class="eyebrow">CONSISTENCY</div><h2>This week</h2></div><span class="section-caption">Last 7 days</span></div>
+      <div id="weekBars" class="week practice-week"></div>
+    </article>
+
+    <article class="card plan-card" id="planCard">
+      <div class="section-head"><div><div class="eyebrow">YOUR ROUTINE</div><h2>Build a practice session</h2></div><span class="plan-total" id="planTotal">25 MIN</span></div>
+      <p class="section-description">Create a simple run-through. You can change the activities and timings whenever you like.</p>
+      <div id="planList" class="plan-list"></div>
+      <div class="plan-add-row">
+        <select id="newActivityType" aria-label="Activity type">
+          <option value="Warm-up">Warm-up</option><option value="Chords">Chords</option><option value="Chord changes">Chord changes</option><option value="Scales">Scales</option><option value="Rhythm">Rhythm</option><option value="Songs">Songs</option><option value="Technique">Technique</option><option value="Ear training">Ear training</option><option value="Improvisation">Improvisation</option><option value="Other">Other</option>
         </select>
-        <input id="noteInp" type="text" maxlength="80" placeholder="Note (optional)">
+        <input id="newActivityMinutes" type="number" min="1" max="120" value="5" inputmode="numeric" aria-label="Activity minutes">
+        <button id="addActivityBtn" class="chip" type="button">＋ Add</button>
       </div>
-      <button id="timerBtn" class="big">Start practising</button>
-      <div class="row add">
-        <input id="addMin" type="number" min="1" max="600" inputmode="numeric" placeholder="Minutes">
-        <button id="addBtn" class="chip">Add manually</button>
+      <div class="plan-actions"><button id="resetPlanBtn" class="text-button" type="button">Reset routine</button><button id="startPlanBtn" class="big start-session-btn" type="button">Start guided session <span>→</span></button></div>
+    </article>
+
+    <article id="activeSession" class="card active-session" hidden>
+      <div class="session-live-head"><span class="live-dot"></span><span>SESSION IN PROGRESS</span><span id="sessionStep" class="session-step">1 OF 3</span></div>
+      <div class="session-progress"><div id="sessionProgressBar"></div></div>
+      <div class="session-current-label">CURRENT FOCUS</div>
+      <h2 id="sessionActivity">Warm-up</h2>
+      <div class="session-timer" id="timerTxt">05:00</div>
+      <p id="sessionHint" class="session-hint">Take your time and settle into the rhythm.</p>
+      <div class="session-controls">
+        <button id="pauseSessionBtn" class="chip" type="button">Ⅱ Pause</button>
+        <button id="nextActivityBtn" class="big" type="button">Next activity →</button>
       </div>
-    </div>
-    <div id="logList"></div>
+      <button id="finishSessionBtn" class="text-button finish-session" type="button">Finish session and save</button>
+    </article>
+
+    <article class="card focus-card">
+      <div class="section-head"><div><div class="eyebrow">WHERE YOUR TIME GOES</div><h2>Practice focus</h2></div></div>
+      <p class="section-description">Minutes recorded for each area. This tracks time spent, not a skill rating.</p>
+      <div id="focusBreakdown" class="focus-breakdown"></div>
+    </article>
+
+    <article class="history-section">
+      <div class="section-head history-heading"><div><div class="eyebrow">YOUR JOURNEY</div><h2>Recent sessions</h2></div><span id="historyCount" class="section-caption">0 entries</span></div>
+      <div id="logList" class="history-list"></div>
+    </article>
+
+    <article class="card manual-card">
+      <div class="manual-head"><div><div class="eyebrow">MISSED A SESSION?</div><h2>Add practice time</h2></div><span>＋</span></div>
+      <div class="manual-fields">
+        <label>FOCUS<select id="catSel"><option>Chords</option><option>Chord changes</option><option>Scales</option><option>Songs</option><option>Rhythm</option><option>Technique</option><option>Ear training</option><option>Improvisation</option><option>Other</option></select></label>
+        <label>MINUTES<input id="addMin" type="number" min="1" max="600" inputmode="numeric" placeholder="e.g. 15"></label>
+      </div>
+      <label class="manual-note-label">NOTE (OPTIONAL)<input id="noteInp" type="text" maxlength="100" placeholder="What did you work on?"></label>
+      <button id="addBtn" class="chip manual-add-btn" type="button">Add to practice history</button>
+    </article>
   </section>
 </main>
 
@@ -129,3 +185,7 @@
 <script src="main.js"></script>
 </body>
 </html>
+
+
+  
+
