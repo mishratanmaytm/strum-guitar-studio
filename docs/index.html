@@ -2,186 +2,100 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#14110F">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Strum – Guitar Studio</title>
-<link rel="manifest" href="manifest.webmanifest">
-<link rel="icon" href="icon-192.png">
-<link rel="apple-touch-icon" href="icon-192.png">
-<link rel="stylesheet" href="style.css">
+<meta name="description" content="Strum is a free guitar tuner, metronome, chord library and practice log. Use it in your browser or install the Android app.">
+<meta name="theme-color" content="#14110F">
+<link rel="icon" href="icon.png">
+<style>
+  :root { --bg:#14110F; --panel:#1E1A16; --text:#F6EFE6; --dim:#A89C8E; --accent:#FFB020; --line:rgba(255,255,255,.09); }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin:0; background:var(--bg); color:var(--text); line-height:1.55;
+         font-family:-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; }
+  .wrap { max-width:980px; margin:0 auto; padding:0 22px; }
+  header { display:flex; align-items:center; gap:12px; padding:22px 0; }
+  header img { width:38px; height:38px; border-radius:10px; } header b { letter-spacing:.2em; font-size:15px; }
+  .hero { display:grid; grid-template-columns:1.1fr .9fr; gap:40px; align-items:center; padding:24px 0 52px; }
+  h1 { font-size:clamp(34px,6vw,58px); line-height:1.05; margin:0 0 16px; letter-spacing:-.02em; } h1 span { color:var(--accent); }
+  .lead { color:var(--dim); font-size:18px; margin:0 0 26px; max-width:30em; }
+  .btns { display:flex; flex-wrap:wrap; gap:12px; }
+  .btn { display:inline-block; text-decoration:none; font-weight:800; padding:15px 24px; border-radius:16px; font-size:17px;
+         background:var(--accent); color:#1B1409; box-shadow:0 10px 30px -10px var(--accent); transition:transform .15s; }
+  .btn.ghost { background:transparent; color:var(--text); border:1px solid var(--line); box-shadow:none; }
+  .btn:hover { transform:translateY(-2px); } .btn:active { transform:scale(.97); }
+  .note { color:var(--dim); font-size:14px; margin-top:14px; }
+  .phone { justify-self:center; width:250px; background:var(--panel); border:1px solid var(--line); border-radius:36px; padding:16px;
+           box-shadow:0 40px 80px -30px rgba(0,0,0,.7); text-align:center; }
+  .phone .n { font-size:70px; font-weight:800; line-height:1; } .phone .n sup { font-size:22px; color:var(--dim); }
+  .phone .g { margin:14px auto 6px; height:90px; position:relative; }
+  .phone .g i { position:absolute; left:50%; bottom:0; width:5px; height:80px; background:var(--accent); border-radius:3px;
+                transform-origin:bottom center; transform:rotate(-8deg); animation:sway 3.2s ease-in-out infinite; }
+  @keyframes sway { 0%,100% { transform:rotate(-30deg); } 50% { transform:rotate(0deg); } 70% { transform:rotate(3deg); } }
+  .phone .ok { color:#5BE584; font-weight:700; } .strs { display:grid; grid-template-columns:repeat(6,1fr); gap:5px; margin-top:12px; }
+  .strs span { background:#2A241F; border-radius:10px; padding:7px 0; font-weight:800; font-size:13px; }
+  section { padding:34px 0; } h2 { font-size:28px; margin:0 0 18px; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:14px; }
+  .card { background:var(--panel); border:1px solid var(--line); border-radius:20px; padding:20px; }
+  .card h3 { margin:0 0 6px; font-size:17px; } .card p { margin:0; color:var(--dim); font-size:15px; }
+  ol { padding-left:20px; } ol li { margin-bottom:10px; }
+  details { background:var(--panel); border:1px solid var(--line); border-radius:16px; padding:14px 18px; margin-bottom:10px; }
+  summary { cursor:pointer; font-weight:600; } details p { color:var(--dim); margin:10px 0 0; }
+  footer { color:var(--dim); font-size:14px; padding:30px 0 50px; border-top:1px solid var(--line); margin-top:30px; }
+  @media (max-width:760px) { .hero { grid-template-columns:1fr; } }
+  @media (prefers-reduced-motion: reduce) { * { animation:none !important; transition:none !important; } }
+</style>
 </head>
 <body>
-<header class="top">
-  <div class="brand"><img src="icon-192.png" alt=""><b>STRUM</b></div>
-  <span class="sub" id="screenTitle">Tuner</span>
-</header>
+<div class="wrap">
+  <header><img src="icon.png" alt="Strum icon"><b>STRUM</b></header>
 
-<main>
-  <!-- TUNER -->
-  <section id="tab-tuner" class="screen">
-    <div class="row between">
-      <select id="tuneSelect" aria-label="Tuning"></select>
-      <div class="stepper">
-        <button id="a4Minus" aria-label="Lower A4">&minus;</button>
-        <span>A4 <b id="a4Val">440</b></span>
-        <button id="a4Plus" aria-label="Raise A4">+</button>
+  <div class="hero">
+    <div>
+      <h1>Your guitar, <span>in tune</span> and in time.</h1>
+      <p class="lead">Strum is a free guitar studio: a live tuner, a rock-steady metronome, a chord library with finger diagrams, and a practice log that keeps your streak. No ads, no sign-up.</p>
+      <div class="btns">
+        <a class="btn" href="Strum.apk" download>&#11015; Android app (APK)</a>
+        <a class="btn ghost" href="app/">Open in browser</a>
       </div>
+      <p class="note">Free &middot; Works offline &middot; <a href="#install" style="color:var(--accent)">How to install</a></p>
     </div>
-    <div class="card gaugeCard">
-      <svg id="gauge" class="gauge" viewBox="0 0 300 160" aria-hidden="true">
-        <path class="arc" d="M 65.1 65.1 A 120 120 0 0 1 234.9 65.1"/>
-        <g id="ticks"></g>
-        <line id="needle" x1="150" y1="150" x2="150" y2="52"/>
-        <circle class="hub" cx="150" cy="150" r="9"/>
-      </svg>
-      <div class="noteRow"><span id="noteBig">–</span><sup id="noteOct"></sup></div>
-      <div id="tuneStatus" class="status">Tap Start</div>
-      <div class="two"><span id="centsTxt"></span><span id="freqTxt"></span></div>
+    <div class="phone" aria-hidden="true">
+      <div class="n">A<sup>2</sup></div>
+      <div class="g"><i></i></div>
+      <div class="ok">In tune ✓</div>
+      <div class="strs"><span>E</span><span>A</span><span>D</span><span>G</span><span>B</span><span>E</span></div>
     </div>
-    <div id="strings" class="strings"></div>
-    <p class="hint">Tap a string to hear its note.</p>
-    <button id="tuneBtn" class="big">Start</button>
-    <p id="tuneMsg" class="msg"></p>
+  </div>
+
+  <section>
+    <h2>What's inside</h2>
+    <div class="grid">
+      <div class="card"><h3>🎯 Tuner</h3><p>Listens through the mic and shows how sharp or flat you are. Six tunings, tap-to-hear reference notes and A4 calibration.</p></div>
+      <div class="card"><h3>🥁 Metronome</h3><p>30 to 300 BPM, six time signatures, eighth-note clicks and tap tempo. Timed with the audio clock, so it doesn't drift.</p></div>
+      <div class="card"><h3>🎸 Chords</h3><p>Seven chord types in all 12 keys, with open and barre shapes, finger diagrams, and a button to hear them strummed.</p></div>
+      <div class="card"><h3>📈 Practice log</h3><p>A timer, a daily goal, a streak counter and a weekly chart. Everything stays on your device.</p></div>
+    </div>
   </section>
 
-  <!-- METRONOME -->
-  <section id="tab-metronome" class="screen">
-    <div class="card center">
-      <div class="bpm"><span id="bpmVal">100</span><small>BPM</small></div>
-      <div id="tempoName" class="tempo">Andante</div>
-      <div class="row center">
-        <button id="bpmMinus5" class="round">−5</button>
-        <button id="bpmMinus" class="round">−</button>
-        <button id="bpmPlus" class="round">+</button>
-        <button id="bpmPlus5" class="round">+5</button>
-      </div>
-      <input id="bpmSlider" type="range" min="30" max="300" value="100" aria-label="Tempo">
-      <div id="beats" class="beats"></div>
-    </div>
-    <div class="row between">
-      <select id="sigSelect" aria-label="Time signature">
-        <option>2/4</option><option>3/4</option><option selected>4/4</option>
-        <option>5/4</option><option>6/8</option><option>7/8</option>
-      </select>
-      <button id="subBtn" class="chip">Eighth-note clicks</button>
-      <button id="tapBtn" class="chip">Tap tempo</button>
-    </div>
-    <button id="metBtn" class="big">Start</button>
+  <section id="install">
+    <h2>Install on Android</h2>
+    <ol>
+      <li>Open this page on your Android phone and tap <b>Android app (APK)</b>.</li>
+      <li>Tap the downloaded file <b>Strum.apk</b>. If Android asks, allow your browser to <b>install unknown apps</b>.</li>
+      <li>Tap <b>Install</b>, then <b>Open</b>. When Strum asks to use the microphone for the tuner, tap <b>Allow</b>.</li>
+    </ol>
+    <details><summary>Why does Android show a warning?</summary>
+      <p>Strum isn't on the Play Store yet, so Android shows a caution for any app installed from a website. Only install apps from people you trust.</p></details>
+    <details><summary>Does Strum record or send my audio anywhere?</summary>
+      <p>No. The tuner works out the pitch live on your device and throws the sound away. Strum has no accounts and no internet features, and your practice log stays on your phone.</p></details>
+    <details><summary>iPhone?</summary>
+      <p>There's no iPhone app, but <b>Open in browser</b> works in Safari. Tap Share, then <b>Add to Home Screen</b> to use it like an app.</p></details>
+    <details><summary>Updating the app</summary>
+      <p>If a new version doesn't install over the old one, uninstall Strum first and install the new file. Your practice log lives inside the app, so uninstalling erases it.</p></details>
   </section>
 
-  <!-- CHORDS -->
-  <section id="tab-chords" class="screen">
-    <div id="roots" class="chips"></div>
-    <div id="types" class="chips"></div>
-    <div class="card center">
-      <h2 id="chordName">C</h2>
-      <div id="chordNotes" class="dim"></div>
-      <div id="chordSvg" class="diagram"></div>
-      <div id="voicings" class="chips small"></div>
-    </div>
-    <button id="playChord" class="big">▶ Strum it</button>
-  </section>
-
-  <!-- PRACTICE STUDIO 2.0 -->
-  <section id="tab-practice" class="screen practice-screen">
-    <div class="practice-heading">
-      <div>
-        <div class="eyebrow">YOUR TRAINING SPACE</div>
-        <h1>Practice <span>Studio</span></h1>
-        <p class="practice-intro">Make every minute count. Build a routine, focus on a skill, and see your consistency grow.</p>
-      </div>
-      <div class="streak-pill"><span>🔥</span><b id="streakVal">0</b><small>day streak</small></div>
-    </div>
-
-    <div class="practice-stats">
-      <article class="practice-stat card">
-        <span class="stat-icon">◷</span><strong id="todayVal">0</strong><small>MINUTES TODAY</small>
-      </article>
-      <article class="practice-stat card">
-        <span class="stat-icon">▤</span><strong id="weekVal">0</strong><small>MINUTES THIS WEEK</small>
-      </article>
-      <article class="practice-stat card">
-        <span class="stat-icon">✦</span><strong id="sessionCount">0</strong><small>SESSIONS COMPLETED</small>
-      </article>
-    </div>
-
-    <article class="card goal-card">
-      <div class="goal-topline">
-        <div><div class="eyebrow">DAILY TARGET</div><h2 id="goalTxt">0 / 20 min</h2></div>
-        <label class="goal-control">GOAL <input id="goalInput" type="number" min="5" max="600" step="5" inputmode="numeric"> <span>MIN</span></label>
-      </div>
-      <div class="track"><div id="goalBar"></div></div>
-      <div class="goal-foot"><span id="goalRemaining">20 minutes to reach your goal</span><span id="goalPercent">0%</span></div>
-    </article>
-
-    <article class="card week-card">
-      <div class="section-head"><div><div class="eyebrow">CONSISTENCY</div><h2>This week</h2></div><span class="section-caption">Last 7 days</span></div>
-      <div id="weekBars" class="week practice-week"></div>
-    </article>
-
-    <article class="card plan-card" id="planCard">
-      <div class="section-head"><div><div class="eyebrow">YOUR ROUTINE</div><h2>Build a practice session</h2></div><span class="plan-total" id="planTotal">25 MIN</span></div>
-      <p class="section-description">Create a simple run-through. You can change the activities and timings whenever you like.</p>
-      <div id="planList" class="plan-list"></div>
-      <div class="plan-add-row">
-        <select id="newActivityType" aria-label="Activity type">
-          <option value="Warm-up">Warm-up</option><option value="Chords">Chords</option><option value="Chord changes">Chord changes</option><option value="Scales">Scales</option><option value="Rhythm">Rhythm</option><option value="Songs">Songs</option><option value="Technique">Technique</option><option value="Ear training">Ear training</option><option value="Improvisation">Improvisation</option><option value="Other">Other</option>
-        </select>
-        <input id="newActivityMinutes" type="number" min="1" max="120" value="5" inputmode="numeric" aria-label="Activity minutes">
-        <button id="addActivityBtn" class="chip" type="button">＋ Add</button>
-      </div>
-      <div class="plan-actions"><button id="resetPlanBtn" class="text-button" type="button">Reset routine</button><button id="startPlanBtn" class="big start-session-btn" type="button">Start guided session <span>→</span></button></div>
-    </article>
-
-    <article id="activeSession" class="card active-session" hidden>
-      <div class="session-live-head"><span class="live-dot"></span><span>SESSION IN PROGRESS</span><span id="sessionStep" class="session-step">1 OF 3</span></div>
-      <div class="session-progress"><div id="sessionProgressBar"></div></div>
-      <div class="session-current-label">CURRENT FOCUS</div>
-      <h2 id="sessionActivity">Warm-up</h2>
-      <div class="session-timer" id="timerTxt">05:00</div>
-      <p id="sessionHint" class="session-hint">Take your time and settle into the rhythm.</p>
-      <div class="session-controls">
-        <button id="pauseSessionBtn" class="chip" type="button">Ⅱ Pause</button>
-        <button id="nextActivityBtn" class="big" type="button">Next activity →</button>
-      </div>
-      <button id="finishSessionBtn" class="text-button finish-session" type="button">Finish session and save</button>
-    </article>
-
-    <article class="card focus-card">
-      <div class="section-head"><div><div class="eyebrow">WHERE YOUR TIME GOES</div><h2>Practice focus</h2></div></div>
-      <p class="section-description">Minutes recorded for each area. This tracks time spent, not a skill rating.</p>
-      <div id="focusBreakdown" class="focus-breakdown"></div>
-    </article>
-
-    <article class="history-section">
-      <div class="section-head history-heading"><div><div class="eyebrow">YOUR JOURNEY</div><h2>Recent sessions</h2></div><span id="historyCount" class="section-caption">0 entries</span></div>
-      <div id="logList" class="history-list"></div>
-    </article>
-
-    <article class="card manual-card">
-      <div class="manual-head"><div><div class="eyebrow">MISSED A SESSION?</div><h2>Add practice time</h2></div><span>＋</span></div>
-      <div class="manual-fields">
-        <label>FOCUS<select id="catSel"><option>Chords</option><option>Chord changes</option><option>Scales</option><option>Songs</option><option>Rhythm</option><option>Technique</option><option>Ear training</option><option>Improvisation</option><option>Other</option></select></label>
-        <label>MINUTES<input id="addMin" type="number" min="1" max="600" inputmode="numeric" placeholder="e.g. 15"></label>
-      </div>
-      <label class="manual-note-label">NOTE (OPTIONAL)<input id="noteInp" type="text" maxlength="100" placeholder="What did you work on?"></label>
-      <button id="addBtn" class="chip manual-add-btn" type="button">Add to practice history</button>
-    </article>
-  </section>
-</main>
-
-<nav id="nav">
-  <button data-tab="tuner" class="on"><i>🎯</i>Tuner</button>
-  <button data-tab="metronome"><i>🥁</i>Metronome</button>
-  <button data-tab="chords"><i>🎸</i>Chords</button>
-  <button data-tab="practice"><i>📈</i>Practice</button>
-</nav>
-
-<script src="audio.js"></script>
-<script src="tuner.js"></script>
-<script src="metronome.js"></script>
-<script src="chords.js"></script>
-<script src="practice.js"></script>
-<script src="main.js"></script>
+  <footer>Made by Tanmay with HTML, CSS and JavaScript. &copy; 2026</footer>
+</div>
 </body>
 </html>
