@@ -1,0 +1,67 @@
+name: Build Strum Android APK
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 60
+    steps:
+      - name: Get the code
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Install Capacitor
+        run: npm install
+
+      - name: Create the Android project
+        run: npx cap add android
+
+      - name: Allow the microphone
+        run: |
+          sed -i 's#</manifest>#    <uses-permission android:name="android.permission.RECORD_AUDIO" />\n    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />\n</manifest>#' android/app/src/main/AndroidManifest.xml
+          grep -n "RECORD_AUDIO" android/app/src/main/AndroidManifest.xml
+
+      - name: Make the app icon and start-up screen
+        continue-on-error: true
+        run: npx --yes @capacitor/assets@3 generate --android
+
+      - name: Copy the web app into Android
+        run: npx cap sync android
+
+      - name: Build the APK
+        run: |
+          cd android
+          chmod +x gradlew
+          ./gradlew assembleDebug
+
+      - name: Keep a copy of the APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: Strum-apk
+          path: android/app/build/outputs/apk/debug/app-debug.apk
+
+      - name: Put the APK on the website
+        run: |
+          cp android/app/build/outputs/apk/debug/app-debug.apk docs/Strum.apk
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add docs/Strum.apk
+          git commit -m "Update Strum.apk" || echo "Nothing new to save"
+          git push
