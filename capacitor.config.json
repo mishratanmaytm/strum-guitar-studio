@@ -1,0 +1,7 @@
+{
+  "appId": "org.tanmay.strum",
+  "appName": "Strum",
+  "webDir": "docs/app",
+  "server": { "androidScheme": "https" },
+  "backgroundColor": "#14110F"
+}

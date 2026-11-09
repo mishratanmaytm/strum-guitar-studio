@@ -1,0 +1,11 @@
+{
+  "name": "strum",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Strum - guitar tuner, metronome, chords and practice log",
+  "dependencies": {
+    "@capacitor/android": "^6.2.0",
+    "@capacitor/cli": "^6.2.0",
+    "@capacitor/core": "^6.2.0"
+  }
+}
